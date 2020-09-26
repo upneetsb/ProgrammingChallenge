@@ -12,10 +12,8 @@ There are two ways to download and run the program:
                 - Once downloaded, unzip the file
                 - Simply open the index.html file to run the animation
         2. Open from command line
-                - Create file called UpneetProgrammingChallenge using 'mkdir UpneetProgrammingChallenge' 
-                - Step into directory using 'cd UpneetProgrammingChallenge'
                 - Run command 'git pull https://github.com/upneetsb/ProgrammingChallenge.git'
-                - Open your finder/filesystem and go to the file UpneetProgrammingChallenge 
+                - Open your finder/filesystem and go to the file ProgrammingChallenge 
                 - Open the index.html file to run the animation
 
 
