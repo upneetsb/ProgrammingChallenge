@@ -1,3 +1,11 @@
+/**
+ * Upneet Bir
+ * 
+ * Asymmetrik Programming Challenge
+ * 
+ * This is my submission for the Asymmetrik Programming Challenge to apply for the
+ * Intern position. 
+ */
 function initAnimation1() {
     var canvas = document.createElement('canvas');
     document.body.appendChild(canvas);
@@ -13,7 +21,6 @@ function initAnimation1() {
     //the default is snowy
     var imgPath = 'image-removebg-preview.png';
     var imgObject = new Image();
-
     var treePath = '3-36870_polar-wallpaper-tree-snow-bear-creative-pine-clipart-removebg-preview.png';
     var treeObject = new Image();
     treeObject.src = treePath;
@@ -54,7 +61,13 @@ function initAnimation1() {
             increasePanel("h");
         }
         if (event.key == 's' || event.key == 'S') {
-            decreasePanel("h");
+            if (canvas.height == 400) {
+                // alert that the value is already at lowest
+                window.alert("The height is already at the lowest value!");
+            }
+            else {
+                decreasePanel("h");
+            }
         }
         // END INCREASE/DECREASE PROCESSING CHECK
 
@@ -64,10 +77,15 @@ function initAnimation1() {
             // snowy trees to fall trees
             // white ground to green ground
             snowy = !snowy;
+
         }
         console.log(event.key);
     })
-
+    /**
+     * This function handles increasing the 
+     * width and height of the pane
+     * @param {char} val 
+     */
     function increasePanel(val) {
         if (val == 'w') {
             canvas.width += 10;
@@ -77,6 +95,12 @@ function initAnimation1() {
         }
     }
 
+    /**
+     * This function handles decreasing the 
+     * width and height of the pane. After all cases have been
+     * handled
+     * @param {char} val 
+     */
     function decreasePanel(val) {
         if (val == 'w') {
             canvas.width -= 10;
@@ -85,15 +109,29 @@ function initAnimation1() {
             canvas.height -= 10;
         }
     }
+    /**
+     * This function contains the order of the functions 
+     * to create the animation
+     */
     function snowfall() {
         drawCanvas();
         addElement();
         fall();
     };
+
+    /**
+     * This function is used to reset the pane image every frame. 
+     * This deals with the background and non-moving elements on the canvas
+     */
     function drawCanvas() {
         var styleBackground = "";
         var groundColor = "";
         var treeOffsetValueBigY, treeOffsetValueSmallX, treeOffsetValueSmallY;
+        /**
+         * For this case, I could have used inline if statements to assign the values
+         * to the variable. The reason I did not is if we add more cases, such as snow, rain, and another
+         * animation style, we would have to recode this whole section with cases again. 
+         */
         if (snowy) {
             styleBackground = "grey";
             groundColor = "white";
@@ -125,6 +163,10 @@ function initAnimation1() {
         context.drawImage(treeObject, treeOffestValueBigX, canvas.height + treeOffsetValueBigY);
         context.drawImage(treeObject, canvas.width + treeOffsetValueSmallX, canvas.height + treeOffsetValueSmallY, 200, 200);
     };
+    /**
+     * This function is used to add particles to the pane and add
+     * the flakes or rain to the flakes array
+     */
     function addElement() {
         if (!paused) {
             var x = Math.ceil(Math.random() * canvas.width);
@@ -132,10 +174,11 @@ function initAnimation1() {
             flakes.push({ "x": x, "y": 0, "s": s });
         }
     };
-
-    // function addLeaf() {
-
-    // }
+    /**
+     * This function controls the fall of the rain or snow. 
+     * Using the array 'flake' created earlier it goes through every 
+     * value and moves it a specific amount down the pane.
+     */
     function fall() {
         for (var i = 0; i < flakes.length; i++) {
             var flake = flakes[i];
@@ -150,14 +193,12 @@ function initAnimation1() {
             context.beginPath();
             context.fillStyle = "rgba(255, 255, 255, " + opacity + ")";
             context.arc(flake.x, flakes[i].y += add_value, flake.s / 2, 0, 2 * Math.PI);
-            // console.log(add);
-            // context.drawImage(imgObject, imgObject.y += add, imgObject.x += add, 100, 30);
             context.fill();
-            if (flakes[i].y > canvas.height) {
+            if (flakes[i].y > canvas.height - 40) {
                 flakes.splice(i, 1);
             }
         };
     };
-    setInterval(snowfall, 10);
+    setInterval(snowfall, 2);
 };
 window.onload = initAnimation1;
